@@ -22,10 +22,15 @@ Scanner ini cocok untuk **analisis keamanan** dan **deteksi malware** secara cep
 ## 🧩 **Fitur Utama**
 
 ✅ **Multi-file type scanning** (`.exe`, `.js`, `.vbs`, `.docm`, `.xlsm`, dll)
+
 ✅ **Signature-based detection** via custom **rules.json**
+
 ✅ **Optional VirusTotal integration** (auto-scan hash/file)
+
 ✅ **Recursive directory scan**
+
 ✅ **Colored CLI output** 
+
 ✅ **Logging hasil scan otomatis** ke file
 
 ---
