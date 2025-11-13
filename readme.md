@@ -22,10 +22,15 @@ Scanner ini cocok untuk **analisis keamanan** dan **deteksi malware** secara cep
 ## 🧩 **Fitur Utama**
 
 ✅ **Multi-file type scanning** (`.exe`, `.js`, `.vbs`, `.docm`, `.xlsm`, dll)
+
 ✅ **Signature-based detection** via custom **rules.json**
+
 ✅ **Optional VirusTotal integration** (auto-scan hash/file)
+
 ✅ **Recursive directory scan**
+
 ✅ **Colored CLI output** 
+
 ✅ **Logging hasil scan otomatis** ke file
 
 ---
@@ -68,6 +73,11 @@ VIRUS_TOTAL_API_KEY=your_api_key_here
 ```bash
 python stealscan.py path/to/folder
 ```
+### 📄 Scan Single File
+
+```bash
+python stealscan.py file.dll
+```
 
 ### 💬 Contoh Output
 
@@ -83,27 +93,6 @@ Jika aman:
 ```bash
 [+] Scan Results:
     [+] All Clean
-```
-
----
-
-## 🧰 **Struktur Folder**
-
-```
-stealscan/
-├── analyzers/
-│   ├── exe_analyzer.py
-│   ├── macro_analyzer.py
-│   ├── script_analyzer.py
-│   ├── vt_analyzer.py
-│   └── rules_loader.py
-├── utils/
-│   ├── file_loader.py
-│   ├── logger.py
-│   └── colorize.py
-├── .env
-├── requirements.txt
-└── stealscan.py
 ```
 
 ---
