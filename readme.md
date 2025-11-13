@@ -247,4 +247,4 @@ Ingin bantu mengembangkan? Silakan fork repo ini dan buat pull request:
 ## 💡 **Credits**
 
 * Inspired by forensic & malware analysis tools
-* Built with ❤️ using Python
+* Built with ❤️ using Python :)
