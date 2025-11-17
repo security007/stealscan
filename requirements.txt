@@ -1,1 +1,72 @@
-oletools
+# ===================================
+# StealScan - Core Dependencies
+# ===================================
+
+# Core scanning modules
+pefile>=2023.2.7
+oletools>=0.60.1
+python-dotenv>=1.0.0
+colorama>=0.4.6
+
+# VirusTotal integration (optional)
+vt-py>=0.17.5
+
+# ===================================
+# File Type Detection (Choose One)
+# ===================================
+
+# Option 1: For Windows (RECOMMENDED - No DLL needed)
+# Uncomment this if you're on Windows:
+python-magic-bin>=0.4.14
+
+# Option 2: For Linux/Mac
+# Uncomment this if you're on Linux/Mac:
+# python-magic>=0.4.27
+
+# ===================================
+# Enhanced Scanning Capabilities
+# ===================================
+
+# PDF scanning
+PyPDF2>=3.0.1
+
+# Image metadata scanning
+Pillow>=10.0.0
+
+# RAR archive support
+rarfile>=4.1
+
+#
+# WINDOWS USERS:
+# 1. Basic install (without libmagic):
+#    pip install pefile oletools python-dotenv colorama vt-py PyPDF2 Pillow rarfile
+#
+# 2. With libmagic (better detection):
+#    pip install python-magic-bin
+#    pip install -r requirements.txt
+#
+# 3. With Androguard (APK scanning):
+#    pip install androguard cryptography pyasn1
+#
+# LINUX/MAC USERS:
+# 1. Install system dependencies first:
+#    Ubuntu/Debian: sudo apt-get install libmagic1 python3-dev
+#    macOS: brew install libmagic
+#
+# 2. Then install Python packages:
+#    pip install -r requirements.txt
+#
+# MINIMAL INSTALL (works without libmagic):
+#    pip install pefile oletools python-dotenv colorama
+#
+# FULL INSTALL (all features):
+#    pip install -r requirements.txt
+#    pip install python-magic-bin androguard cryptography pyasn1
+#
+# TROUBLESHOOTING:
+# - If "libmagic not found": pip install python-magic-bin (Windows)
+# - If "No module androguard": pip install androguard
+# - If "RAR error": Install WinRAR from https://www.rarlab.com/
+# - Scanner will work even if optional modules are missing!
+#
+# ===================================

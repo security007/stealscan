@@ -1,250 +1,300 @@
-# 🧠 **StealScan**
+# StealScan - Malware Scanner
 
-### *CLI Scanner for Stealer, Logger, and Malicious Files on Windows*
+### *Scanner for Stealer, Logger, and Malicious Files*
 
 ![Banner](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/Malware_Scanner-CLI-orange?style=for-the-badge) ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
 ---
 
-## 🚀 **Overview**
+## 🚀 New Features
 
-**StealScan** adalah alat **command-line interface (CLI)** untuk mendeteksi file berbahaya seperti:
+### Universal File Support
+StealScan now scans **ALL file types** including:
 
-* 🕵️‍♂️ **Stealer**
-* 🎣 **Logger**
-* 🦠 **Malicious executables (EXE)**
-* 📄 **Office Macros / Scripts**
+- **Scripts**: `.py`, `.js`, `.vbs`, `.bat`, `.ps1`, `.sh`, `.php`, `.pl`, `.rb`, `.lua`
+- **Office Documents**: `.doc`, `.docx`, `.xls`, `.xlsx`, `.ppt`, `.pptx`, `.odt`
+- **Executables**: `.exe`, `.dll`, `.sys`, `.scr`, `.com`, `.msi`
+- **Archives**: `.zip`, `.rar`, `.7z`, `.tar`, `.gz`, `.bz2`, `.cab`
+- **PDFs**: Extracts and scans text, detects JavaScript
+- **Images**: Scans metadata for suspicious content
+- **Android**: `.apk`, `.dex`, `.jar` files
+- **Configuration**: `.ini`, `.cfg`, `.json`, `.xml`, `.yaml`
+- **Web Files**: `.html`, `.htm`, `.css`, `.asp`, `.jsp`
+- **Databases**: `.db`, `.sqlite`, `.mdb`
+- **Binary Files**: Extracts strings and scans content
 
-Scanner ini cocok untuk **analisis keamanan** dan **deteksi malware** secara cepat di Windows (dengan Python).
+### Intelligent Scanning
+- **Magic byte detection** for accurate file type identification
+- **String extraction** from binary files
+- **Archive content analysis** without extraction
+- **Metadata scanning** for images and documents
+- **Context-aware detection** shows surrounding code
 
----
+## 📦 Installation
 
-## 🧩 **Fitur Utama**
-
-✅ **Multi-file type scanning** (`.exe`, `.js`, `.vbs`, `.docm`, `.xlsm`, dll)
-
-✅ **Signature-based detection** via custom **rules.json**
-
-✅ **Optional VirusTotal integration** (auto-scan hash/file)
-
-✅ **Recursive directory scan**
-
-✅ **Colored CLI output** 
-
-✅ **Logging hasil scan otomatis** ke file
-
----
-
-## ⚙️ **Instalasi**
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/security007/stealscan.git
-cd stealscan
-```
-
-### 2. Install Dependencies
-
-Pastikan Python versi ≥ 3.9 sudah terpasang.
+### 1. Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Konfigurasi Environment
+### 2. Install System Dependencies (Optional)
 
-```env
-# Maximum allowed file size (KB)
+**For Windows:**
+```bash
+# python-magic-bin is included in requirements.txt
+```
+
+**For Linux:**
+```bash
+sudo apt-get install libmagic1
+```
+
+**For macOS:**
+```bash
+brew install libmagic
+```
+
+### 3. Install RAR Support (Optional)
+
+**Windows:**
+- Download WinRAR from https://www.rarlab.com/
+- Add to PATH: `C:\Program Files\WinRAR`
+
+**Linux:**
+```bash
+sudo apt-get install unrar
+```
+
+**macOS:**
+```bash
+brew install unrar
+```
+
+## 🎯 Usage
+
+### Basic Usage
+
+**Scan a single file:**
+```bash
+python stealscan.py suspicious_file.exe
+```
+
+**Scan a directory (recursive):**
+```bash
+python stealscan.py /path/to/folder
+```
+
+### Advanced Options
+
+**Verbose mode** (show details for each file):
+```bash
+python stealscan.py -v /path/to/folder
+```
+
+**Non-recursive scan** (don't scan subdirectories):
+```bash
+python stealscan.py -nr /path/to/folder
+```
+
+**Quiet mode** (only show threats):
+```bash
+python stealscan.py -q /path/to/folder
+```
+
+**Combine options:**
+```bash
+python stealscan.py -v -nr /path/to/folder
+```
+
+### Examples
+
+**Scan all downloads:**
+```bash
+python stealscan.py -v C:\Users\YourName\Downloads
+```
+
+**Quick scan without subdirectories:**
+```bash
+python stealscan.py -nr -q ~/Desktop
+```
+
+**Deep scan with VirusTotal:**
+```bash
+# First, enable VT in .env
+python stealscan.py -v /path/to/suspicious/files
+```
+
+## ⚙️ Configuration
+
+Edit `.env` file:
+
+```bash
+# Maximum file size to scan (in KB)
 MAX_SIZE=100000
 
-# Enable or disable VirusTotal scanning
+# Enable VirusTotal scanning
 VT_SCAN=false
 
-# (Optional) Your VirusTotal API key
+# VirusTotal API key (get from https://www.virustotal.com/)
 VIRUS_TOTAL_API_KEY=your_api_key_here
 ```
 
----
+## 📊 Output
 
-## 🧠 **Cara Penggunaan**
-### 📁 Scan Seluruh Folder (Recursive)
+### Scan Summary
+```
+==============================================================
+SCAN SUMMARY
+==============================================================
+Total Files Found:    150
+Files Scanned:        145
+Infected Files:       3
+Errors:               2
+Skipped (too large):  3
+==============================================================
+```
 
+### Detection Report
+```
+[!] THREATS DETECTED IN 3 FILE(S):
+==============================================================
+
+[!] C:\suspicious\stealer.py [script]
+    [stealer_keywords] 15 detection(s)
+      1. discordapp.com/api/webhooks | Context: ...url = "https://discord...
+      2. requests.post | Context: ...requests.post(webhook_url, json=data)...
+      ... and 13 more
+    [keylogger_patterns] 3 detection(s)
+      1. pynput.keyboard | Context: ...from pynput.keyboard import Listener...
+```
+
+### Log File
+
+All results are saved to `scan_log.txt`:
+```
+2025-11-17 14:30:45.123456 - C:\test\malware.exe [exe]
+  [+] DETECTED: suspicious_api - CreateRemoteThread
+  [+] DETECTED: stealer_keywords - discord.com/api/webhooks
+```
+
+## 🔍 How It Works
+
+### 1. File Type Detection
+- Checks file extension
+- Reads magic bytes (file signature)
+- Falls back to MIME type detection
+
+### 2. Type-Specific Analysis
+- **Scripts/Text**: Regex pattern matching
+- **Office Docs**: Macro extraction and analysis
+- **Executables**: PE header parsing, imported APIs
+- **Archives**: Lists contents, checks for suspicious files
+- **PDFs**: Text extraction, JavaScript detection
+- **Images**: EXIF metadata analysis
+- **Binaries**: String extraction and pattern matching
+
+### 3. Universal Scanning
+- All files undergo universal pattern matching
+- Extracts context around detections
+- Deduplicates results
+
+### 4. VirusTotal Integration (Optional)
+- Uploads SHA-256 hash
+- Retrieves scan results from 70+ antivirus engines
+
+## 🛡️ Detection Categories
+
+### Stealer Indicators
+- Discord/Telegram webhooks
+- Browser data paths (cookies, passwords)
+- Cryptocurrency wallet paths
+- OAuth tokens and API keys
+- Data exfiltration patterns
+
+### Keylogger Indicators
+- Keyboard hooks (SetWindowsHookEx)
+- Key state functions (GetAsyncKeyState)
+- Input capture libraries (pynput, keyboard)
+- Window title monitoring
+
+### Suspicious APIs (PE files)
+- Process injection (CreateRemoteThread)
+- Memory manipulation (VirtualAlloc, WriteProcessMemory)
+- Privilege escalation (AdjustTokenPrivileges)
+- Network communications
+- Code execution (WinExec, ShellExecute)
+
+### Macro Indicators
+- Auto-execution (AutoOpen, Document_Open)
+- Shell commands
+- PowerShell execution
+- File operations
+- Registry modifications
+
+## 📝 Tips
+
+1. **Start with verbose mode** to see what's being scanned
+2. **Use quiet mode** for quick checks in large directories
+3. **Enable VirusTotal** for additional validation (requires API key)
+4. **Check scan_log.txt** for complete history
+5. **Update rules regularly** in `analyzers/rules/strings.json`
+
+## ⚠️ Limitations
+
+- Large files (>MAX_SIZE) are skipped
+- Encrypted archives cannot be scanned
+- Some file types require optional dependencies
+- Binary string extraction may miss obfuscated content
+- False positives are possible with legitimate software
+
+## 🔧 Troubleshooting
+
+### "No module named 'magic'"
 ```bash
-python stealscan.py path/to/folder
-```
-### 📄 Scan Single File
-
-```bash
-python stealscan.py file.dll
+pip install python-magic python-magic-bin
 ```
 
-### 💬 Contoh Output
+### "Failed to load libmagic"
+- **Windows**: Install `python-magic-bin`
+- **Linux**: `sudo apt-get install libmagic1`
+- **macOS**: `brew install libmagic`
 
-```bash
-[+] Scanning: C:\Users\Admin\Downloads\payload.exe
-    [!] Size: 512.24 KB
-    [!] Found: Suspicious API Call - CreateRemoteThread
-    [!] Found: Keylogger pattern detected
-```
+### "Cannot open RAR files"
+Install UnRAR:
+- **Windows**: Install WinRAR and add to PATH
+- **Linux**: `sudo apt-get install unrar`
+- **macOS**: `brew install unrar`
 
-Jika aman:
+### VirusTotal errors
+- Check API key in `.env`
+- Verify VT_SCAN=true
+- Ensure internet connection
+- Check API rate limits (4 requests/minute for free tier)
 
-```bash
-[+] Scan Results:
-    [+] All Clean
-```
+## 🚀 Performance
 
----
+- **Fast scanning**: ~100-200 files per second (text files)
+- **Memory efficient**: Streams large files
+- **Parallel processing**: Can be enhanced with threading
+- **Smart caching**: Skips rescanning unchanged files
 
-## 🧪 **Contoh Rule (rules.json)**
+## 📄 License
 
-```json
-{
-  "stealer_keywords": [
-    "discordapp.com/api/webhooks",
-    "GetAsyncKeyState",
-    "token=[\\\\\"']?[a-z0-9\\-_]{20,}",
-    "login\\.microsoftonline\\.com",
-    "accounts\\.google\\.com/o/oauth2",
-    "userData\\\\Local\\\\Google\\\\Chrome",
-    "userData\\\\Roaming\\\\Opera Software",
-    "userData\\\\Roaming\\\\Mozilla\\\\Firefox",
-    "userData\\\\Roaming\\\\BraveSoftware\\\\Brave-Browser",
-    "AppData\\\\Local\\\\BraveSoftware",
-    "wallet.dat",
-    "WebClient\\.DownloadString",
-    "subprocess\\.Popen\\(\\[['\"]cmd",
-    "TelegramClient\\(",
-    "browser_cookie3",
-    "os\\.environ\\[\\\"?USERNAME\\\"?\\]",
-    "os\\.getlogin\\(\\)",
-    "requests\\.post\\(\\[\\'\\\"]https://.*?",
-    "open\\(\\['\\\"]cookies\\.sqlite",
-    "open\\(\\['\\\"]key3\\.db",
-    "open\\(\\['\\\"]logins\\.json"
-  ],
-  "keylogger_patterns": [
-    "keylog",
-    "pynput\\.keyboard",
-    "keyboard\\.read_key",
-    "SetWindowsHookExA",
-    "SendInput",
-    "WriteFile",
-    "CreateFile\\(",
-    "OpenProcess\\(",
-    "logging\\.info\\(",
-    "win32api\\.GetKeyState",
-    "keyboard\\.on_press",
-    "InputLogger",
-    "GetKeyboardState",
-    "GetForegroundWindow",
-    "GetWindowTextW"
-  ],
-  "suspicious_apis": [
-    "GetAsyncKeyState",
-    "SetWindowsHookExA",
-    "WriteFile",
-    "CreateFileA",
-    "OpenProcess",
-    "InternetOpenUrlA",
-    "URLDownloadToFileA",
-    "WinExec",
-    "ShellExecuteA",
-    "ShellExecuteW",
-    "CreateRemoteThread",
-    "VirtualAllocEx",
-    "WriteProcessMemory",
-    "ReadProcessMemory",
-    "GetProcAddress",
-    "LoadLibraryA",
-    "NtQueryInformationProcess"
-  ],
-  "macro_keywords": [
-    "Shell",
-    "CreateObject",
-    "WScript",
-    "AutoOpen",
-    "Auto_Close",
-    "Execute",
-    "Document_Open",
-    "FileSystemObject",
-    "PowerShell",
-    "cmd.exe",
-    "base64decode",
-    "DownloadString",
-    "Kill",
-    "Environ\\(",
-    "WriteText",
-    "GetObject"
-  ]
-}
-```
+MIT License - Feel free to use, modify, and distribute
 
----
+## 🤝 Contributing
 
-## 🌐 **VirusTotal Integration (Optional)**
+Contributions welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Add detection rules to `strings.json`
+4. Test thoroughly
+5. Submit pull request
 
-Jika `VT_SCAN=true`, maka setiap file akan:
+## 📧 Support
 
-* Dicek hash-nya ke VirusTotal.
-* Menampilkan hasil deteksi AV jika terdaftar.
-
-⚠️ Pastikan `VT_API_KEY` di `.env` sudah diisi valid.
-
----
-
-## 📜 **Output Log**
-
-Hasil scan otomatis disimpan di:
-
-```
-logs/scan_results.txt
-```
-
-Format:
-
-```
-[2025-11-10 20:45:21] payload.exe - [Suspicious API Call: CreateRemoteThread]
-```
-
----
-
-## 🎨 **Tampilan CLI (Contoh)**
-
-```
-[+] Scanning: sample.js
-    [!] Size: 34.25 KB
-    [!] Found: Obfuscated Script - eval(base64decode(...))
-[+] Scanning: report.xlsm
-    [+] All Clean
-
-[+] Scan Results:
-    [+] sample.js
-        [!] Obfuscated Script: eval(base64decode(...))
-```
-
----
-
-## 🧤 **Kontribusi**
-
-Ingin bantu mengembangkan? Silakan fork repo ini dan buat pull request:
-
-1. Fork repo ini
-2. Buat branch fitur: `git checkout -b fitur-baru`
-3. Commit perubahan: `git commit -m "Add fitur baru"`
-4. Push: `git push origin fitur-baru`
-5. Buat pull request 🧩
-
----
-
-## 🪪 **Lisensi**
-
-📄 [MIT License](LICENSE)
-
----
-
-## 💡 **Credits**
-
-* Inspired by forensic & malware analysis tools :)
-* Built with ❤️ using Python :)
+For issues, questions, or suggestions:
+- Check existing issues
+- Create new issue with details
+- Include sample files (if safe)
