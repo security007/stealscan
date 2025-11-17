@@ -1,9 +1,0 @@
-2025-11-17 10:08:32.319496 - apknih.apk [android]
-  [+] DETECTED: android_suspicious_package - Found suspicious package: payload in classes.dex
-  [+] DETECTED: android_suspicious_package - Found suspicious package: rat in classes.dex
-  [+] DETECTED: android_high_risk_api - DexClassLoader found 1x in classes.dex
-  [+] DETECTED: android_high_risk_api - BaseDexClassLoader found 1x in classes.dex
-  [+] DETECTED: android_medium_risk_api - TelephonyManager found 1x in classes.dex
-  [+] DETECTED: android_medium_risk_api - LocationManager found 1x in classes.dex
-  [+] DETECTED: android_risk_assessment - Risk Level: HIGH (Score: 46)
-
